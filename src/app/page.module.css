@@ -8,12 +8,11 @@
 }
 
 .draggable_area {
-
   border: white 1px solid;
   padding: 6px;
 }
 
 .drag_on {
   opacity: 0.7;
-
 }
+

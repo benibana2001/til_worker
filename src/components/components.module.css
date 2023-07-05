@@ -1,0 +1,11 @@
+/* 
+  MasterImageList.tsx
+*/
+.master_image_display_area {
+  display: flex;
+  width: 80vw;
+  /* max-width: 400px; */
+  padding: 10px;
+  margin: 6px;
+  background-color: #2e2e2e;
+}
