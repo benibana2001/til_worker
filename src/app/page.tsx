@@ -1,5 +1,5 @@
 'use client';
-import { FC, useCallback, useRef, useState } from 'react';
+import { FC, RefObject, useCallback, useRef, useState } from 'react';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import styles from './page.module.css';
 
@@ -18,9 +18,12 @@ const CanvasImage: FC<{ file: File; childKey: string }> = ({
    * その際にRefを使用してDOMを
    */
   const [doneLoadingFile, setDoneFileLoading] = useState(() => false);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  if (canvasRef.current) {
-    const ctx = canvasRef.current.getContext('2d');
+  const initialRef = document.createElement('canvas')
+  const canvasRef: RefObject<HTMLCanvasElement> = useRef<HTMLCanvasElement>(initialRef);
+    console.log('😀')
+  // if (canvasRef.current) {
+
+    const ctx = canvasRef.current?.getContext('2d');
     if (ctx) {
       createImageBitmap(file).then((bitMap) => {
         const MaxPixel = 200;
@@ -50,8 +53,9 @@ const CanvasImage: FC<{ file: File; childKey: string }> = ({
         setDoneFileLoading(true);
       });
     }
-  }
+  // }
   console.groupEnd();
+
 
   return  <canvas key={childKey} ref={canvasRef} />;
 };
@@ -92,6 +96,7 @@ export default function Home() {
     // 状態更新を検知するためにdepsには現在のstateを指定する
     [currentFiles]
   );
+
   const onDropRejected = useCallback(() => {
     console.error(`files were rejected !!!`);
     alert('files wer rejected!! ');
@@ -127,7 +132,6 @@ export default function Home() {
       <ul>
         {currentFiles &&
           currentFiles.map((file, i) => {
-            console.log(i);
             return <CanvasImage key={i} childKey={`canvas_${i}`} file={file} />;
           })}
       </ul>
